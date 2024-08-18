@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kyla/presentation/home_page/home_model.dart';
+import 'package:kyla/presentation/home_page/models/home_model.dart';
 import 'package:kyla/presentation/home_page/widgets/dialog.dart';
 
 class ShopsItem extends StatelessWidget {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:kyla/presentation/home_page/home_model.dart';
+import 'package:kyla/presentation/home_page/swipe_children.dart';
+import 'package:kyla/presentation/home_page/models/home_model.dart';
 import 'package:kyla/presentation/home_page/widgets/shop_item.dart';
 import 'package:kyla/presentation/home_page/models/chart_models.dart';
 import 'package:kyla/presentation/home_page/widgets/custom_app_bar.dart';
@@ -74,47 +75,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     itemBuilder: (context, index) {
                       return Slidable(
                         key: ValueKey(shops[index].id),
-                        endActionPane: ActionPane(
-                          motion: const ScrollMotion(),
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.orange,
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(16),
-                                    child: const Icon(Icons.telegram, color: Colors.white),
-                                  ),
-                                  const SizedBox(
-                                    height: 24,
-                                    child: VerticalDivider(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.all(16),
-                                    child: const Icon(Icons.edit, color: Colors.white),
-                                  ),
-                                  const SizedBox(
-                                    height: 24,
-                                    child: VerticalDivider(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.all(16),
-                                    child: const Icon(Icons.delete, color: Colors.white),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
+                        endActionPane: const ActionPane(
+                          motion: ScrollMotion(),
+                          children: [SwipeChildren()],
                         ),
                         child: ShopsItem(
                           shops: shops,
