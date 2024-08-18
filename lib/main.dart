@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:bot_toast/bot_toast.dart';
 import 'package:kyla/presentation/home_page/home_page.dart';
 
 void main() {
@@ -11,11 +10,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      builder: BotToastInit(),
-      navigatorObservers: [BotToastNavigatorObserver()],
-      home: const HomePage(),
+      home: HomePage(),
     );
   }
 }

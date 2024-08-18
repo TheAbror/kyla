@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kyla/presentation/home_page/home_model.dart';
+import 'package:kyla/presentation/home_page/widgets/shop_item.dart';
 import 'package:kyla/presentation/home_page/models/chart_models.dart';
 import 'package:kyla/presentation/home_page/widgets/custom_app_bar.dart';
 import 'package:kyla/presentation/home_page/widgets/custom_floating_button.dart';
-import 'package:kyla/presentation/home_page/widgets/shop_item.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       ChartData('19:00', 8),
     ];
     _tooltip = TooltipBehavior(enable: true);
+
     super.initState();
   }
 

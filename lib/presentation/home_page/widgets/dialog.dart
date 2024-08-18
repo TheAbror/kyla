@@ -1,73 +1,72 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 
-void showMessage(String text, {bool isError = false}) {
-  BotToast.showAttachedWidget(
-    attachedBuilder: (_) {
-      return Column(
-        // mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Card(
-            color: isError ? Colors.red : Colors.green,
-            child: Container(
-              padding: const EdgeInsets.only(
-                top: 8,
-                bottom: 8,
-                left: 16,
-                right: 11,
-              ),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(6)),
-              ),
-              constraints: const BoxConstraints(minHeight: 64),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Icon(
-                      isError ? Icons.error : Icons.done,
-                      size: 24,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          text,
-                          style: const TextStyle(
-                            color: Colors.white,
-                          ),
+void showTopToast(BuildContext context) {
+  final overlay = Overlay.of(context);
+  late OverlayEntry overlayEntry;
+  final animationController = AnimationController(
+    vsync: Overlay.of(context),
+    duration: const Duration(milliseconds: 300),
+  );
+
+  final animation = Tween<Offset>(
+    begin: Offset.zero,
+    end: const Offset(-1, 0),
+  ).animate(CurvedAnimation(
+    parent: animationController,
+    curve: Curves.easeInOut,
+  ));
+
+  overlayEntry = OverlayEntry(
+    builder: (context) {
+      return SlideTransition(
+        position: animation,
+        child: GestureDetector(
+          onHorizontalDragEnd: (details) {
+            if (details.primaryVelocity != null && details.primaryVelocity! < 0) {
+              animationController.forward().then((_) {
+                overlayEntry.remove();
+              });
+            }
+          },
+          child: Material(
+            color: Colors.transparent,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: AnimatedContainer(
+                width: MediaQuery.of(context).size.width * 0.5,
+                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.17),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.orange,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                duration: const Duration(milliseconds: 300),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(Icons.fireplace_outlined, color: Colors.white),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'You are too close to the daily limit. Only \$5.34 left',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    child: Container(
-                      padding: const EdgeInsets.all(5),
-                      child: const Icon(
-                        Icons.close,
-                        size: 24,
-                        color: Colors.white,
+                        textAlign: TextAlign.start,
                       ),
                     ),
-                    onTap: () {
-                      BotToast.cleanAll();
-                    },
-                  ),
-                ],
+                    Icon(Icons.close, color: Colors.white),
+                  ],
+                ),
               ),
             ),
           ),
-        ],
+        ),
       );
     },
-    duration: const Duration(seconds: 5),
-    target: const Offset(600, 600),
   );
+
+  overlay.insert(overlayEntry);
 }
